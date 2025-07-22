@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 @Entity
 @Table(name = "task_lists")
@@ -32,7 +34,7 @@ public class TaskList {
     @Column(name = "updated", nullable = false)
     private LocalDateTime updated;
 
-    public TaskList(){}
+    public TaskList(UUID id, String title, String description, List<Task> tasks, Object created, Object updated){}
 
     public TaskList(String description, String title, int id, List<Task> tasks, LocalDateTime created, LocalDateTime updated) {
         this.description = description;
@@ -41,6 +43,9 @@ public class TaskList {
         this.tasks = tasks;
         this.created = created;
         this.updated = updated;
+    }
+
+    public <U> TaskList(UUID id, String title, String description, Optional<U> u) {
     }
 
     public int getId() {

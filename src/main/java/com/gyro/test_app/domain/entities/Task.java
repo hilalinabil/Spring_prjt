@@ -40,7 +40,7 @@ public class Task {
     @Column(name = "updated", nullable = false)
     private LocalDateTime updated;
 
-    public Task(){}
+    public Task(int id, String title, String description, LocalDateTime dueDate, TaskStatus status, TaskPriority priority, Object created, Object tasklist, Object updated){}
 
     public Task(String description, String title, int id, LocalDateTime dueDate, TaskStatus status, TaskPriority priority, LocalDateTime created, TaskList tasklist, LocalDateTime updated) {
         this.description = description;
