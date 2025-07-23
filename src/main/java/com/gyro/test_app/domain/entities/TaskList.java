@@ -34,7 +34,7 @@ public class TaskList {
     @Column(name = "updated", nullable = false)
     private LocalDateTime updated;
 
-    public TaskList(UUID id, String title, String description, List<Task> tasks, Object created, Object updated){}
+    public TaskList(String id, String title, String description, List<Task> tasks, Object created, Object updated){}
 
     public TaskList(String description, String title, int id, List<Task> tasks, LocalDateTime created, LocalDateTime updated) {
         this.description = description;
