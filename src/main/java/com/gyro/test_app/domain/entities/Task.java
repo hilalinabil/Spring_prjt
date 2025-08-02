@@ -20,14 +20,19 @@ public class Task {
     @Column(name = "description")
     private String description;
 
-    @Column(name= "due_date")
+    @Column(name = "due_date")
     private LocalDateTime dueDate;
 
-    @Column(name ="status", nullable = false)
+    @Column(name = "status", nullable = false)
     private TaskStatus status;
 
-    @Column(name ="priority", nullable = false)
+    @Column(name = "priority", nullable = false)
     private TaskPriority priority;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_list_id")
+    private TaskList tasklist;
+
 
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
@@ -35,37 +40,34 @@ public class Task {
     @Column(name = "updated", nullable = false)
     private LocalDateTime updated;
 
-    public Task(){}
-    public Task(int id, String title, String description, LocalDateTime dueDate, TaskStatus status, TaskPriority priority, LocalDateTime created, LocalDateTime updated ) {
-        this.id = id;
-        this.title = title;
+    public Task(int id, String title, String description, LocalDateTime dueDate, TaskStatus status, TaskPriority priority, Object created, Object tasklist, Object updated){}
+
+    public Task(String description, String title, int id, LocalDateTime dueDate, TaskStatus status, TaskPriority priority, LocalDateTime created, TaskList tasklist, LocalDateTime updated) {
         this.description = description;
+        this.title = title;
+        this.id = id;
         this.dueDate = dueDate;
         this.status = status;
         this.priority = priority;
         this.created = created;
+        this.tasklist = tasklist;
         this.updated = updated;
     }
 
-    public int getId(){
-        return id;
-    }
-    public void setId(int id){
-        this.id = id;
-    }
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
-    public void setTitle(String title){
+
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public LocalDateTime getDueDate() {
-        return dueDate;
+    public int getId() {
+        return id;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
-        this.dueDate = dueDate;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -76,6 +78,14 @@ public class Task {
         this.description = description;
     }
 
+    public LocalDateTime getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDateTime dueDate) {
+        this.dueDate = dueDate;
+    }
+
     public TaskStatus getStatus() {
         return status;
     }
@@ -84,20 +94,28 @@ public class Task {
         this.status = status;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
     public TaskPriority getPriority() {
         return priority;
     }
 
     public void setPriority(TaskPriority priority) {
         this.priority = priority;
+    }
+
+    public TaskList getTasklist() {
+        return tasklist;
+    }
+
+    public void setTasklist(TaskList tasklist) {
+        this.tasklist = tasklist;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 
     public LocalDateTime getUpdated() {
@@ -112,12 +130,12 @@ public class Task {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(dueDate, task.dueDate) && status == task.status && priority == task.priority && Objects.equals(created, task.created) && Objects.equals(updated, task.updated);
+        return id == task.id && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(dueDate, task.dueDate) && status == task.status && priority == task.priority && Objects.equals(tasklist, task.tasklist) && Objects.equals(created, task.created) && Objects.equals(updated, task.updated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, dueDate, status, priority, created, updated);
+        return Objects.hash(id, title, description, dueDate, status, priority, tasklist, created, updated);
     }
 
     @Override
@@ -129,9 +147,12 @@ public class Task {
                 ", dueDate=" + dueDate +
                 ", status=" + status +
                 ", priority=" + priority +
+                ", tasklist=" + tasklist +
                 ", created=" + created +
                 ", updated=" + updated +
                 '}';
     }
 }
+
+
 
